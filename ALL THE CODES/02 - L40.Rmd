@@ -1,0 +1,356 @@
+---
+title: "02 - L40"
+author: "Handsome Koh"
+date: "2025-10-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import Plain Text Files in R
+
+Make use of the *scan* function, to read the entire text into our codes, automatically detecting the data types.
+
+```{r}
+nile <- scan("nile.txt")
+nile
+```
+
+•	Check the data type in variable *nile*
+
+```{r}
+typeof(nile)
+```
+
+•	Plot histogram
+
+```{r}
+hist(nile)
+```
+
+Read data from *nile.txt*, store each data as "character" type. 
+
+```{r}
+nile_char <- scan("nile.txt", what=character())
+nile_char
+```
+
+Check the data type in *nile_char*
+
+```{r}
+typeof(nile_char)
+```
+
+Read in plain text data separated by *";"* for each data, by specifying the value for argument *sep*.
+
+```{r}
+sunset_sem <- scan("sunset-salvo-sem.txt", what=character(), sep=";")
+sunset <- scan("sunset-salvo.txt", what=character())
+```
+
+## Reading text data of different format
+
+Reading data with different data types.
+Skip the 1st line.
+
+```{r}
+running_lst <- scan("running_dat.tsv", what=list("",1.0,1.0,1.0,1.0,1.0,1.0), sep="\t", skip=1)
+running_lst
+```
+
+### Export Plain Text Files in R
+
+Output *sunset* data with "&" as separator.
+
+```{r}
+cat(sunset, file="sunset-salvo-amp.txt", sep="&")
+```
+
+## Import Delimiter-Separated Values Files in R
+
+Read in structured data files, into R program as a table (*data frame*), automatically detect the data types for each field/variable.
+
+```{r}
+running_tbl <- read.table("running_dat.tsv", header=TRUE, sep="\t")
+running_tbl
+```
+
+Show the structure of the table/data frame, also to show the data types for each variables.
+
+```{r}
+str(running_tbl)
+```
+
+### Reading CSV files in R
+
+Read CSV files into R program as data frame.
+*read.csv* read comma separated values, with "." as decimal point
+*read.csv2* read semicolon separated values, with "," as decimal point
+
+```{r}
+running_df <- read.csv("running_dat.csv")
+running_df 
+```
+
+## Export Data Frame in R
+
+Export data frame / table to a delimiter-separated values file.
+Example, use "%" as separator, "*" as decimal.
+
+```{r}
+write.table(running_df, file="running_star.txt", sep="%", dec="*")
+```
+
+## Import XML in R
+
+o	install.packages("xml2")
+o	library("xml2")
+
+Read data from XML into R as a tree hierarchical structure
+
+```{r}
+stats_people <- read_xml("statisticians.xml")
+stats_people
+```
+
+### Read XML as table
+
+Reading XML documents into R, store it as a data frame / table.
+
+o	install.packages("XML")
+o	library("XML")
+
+```{r}
+stats_people_df <- xmlToDataFrame("statisticians.xml")
+stats_people_df
+```
+
+### Export XML Files in R
+
+```{r}
+bayes_record <- xml_children(stats_people)[[4]]
+xml_remove(bayes_record)
+write_xml(stats_people, "statisticians_no_bayes.xml")
+```
+
+### Import JSON Files in R
+
+Using *jsonlite* library package, into R program as a data frame.
+
+```{r}
+library("jsonlite")
+stats_people_json_df <- fromJSON("statisticians.json")
+stats_people_json_df
+```
+
+### Export to JSON format in R
+
+Export data in data frame to *json* format, and to write the json object into a file.
+
+```{r}
+running_json <- toJSON(running_df)
+prettify(running_json)
+```
+
+export data frame to a *json* file
+
+```{r}
+write_json(running_df,"running.json",pretty=TRUE)
+```
+
+## Data Types in R
+
+#### Logical
+
+Boolean / Logical
+
+```{r}
+a <- TRUE
+b <- FALSE
+class(a)
+typeof(b)
+```
+
+#### Character
+
+strings / series of characters
+
+```{r}
+str1 <- "Handsome Koh"
+str2 <- ' is '
+str3 <- "handsome"
+class(str1)
+typeof(str2)
+```
+
+join the strings / characters
+
+```{r}
+str4 <- paste(str1,str2,str3)
+print(str4)
+str5 <- cat(str1,str2,str3)
+print(str5)
+```
+
+#### Numeric
+
+stores all numbers as decimals
+
+```{r}
+x <- 2.5
+y <- 2
+class(x)
+typeof(x)
+typeof(y)
+```
+
+#### Integer
+
+explicitly convert/indicate the number *as* Integer
+
+```{r}
+z1 <- as.integer(5)
+z2 <- 5L
+class(z1)
+typeof(z1)
+```
+
+## Data Structures in R
+
+#### Vectors
+
+a linear structure that store data of the same data types
+
+```{r}
+marks_vec <- c(80, 75, 90, 99, 100)
+names_vec <- c("John", "Jane", "Richard", "Emma")
+logicals_vec <- c(FALSE, TRUE, TRUE, FALSE, FALSE, TRUE) 
+class(marks_vec)
+typeof(marks_vec)
+str(marks_vec)
+marks_vec
+```
+
+replace the indices with names / labels 
+
+
+```{r}
+name_vec <- c("John", "Doe")
+name_vec
+names(name_vec) <- c("First Name","Last Name")
+name_vec
+```
+
+#### Factors
+
+categorical nominal / ordinal data
+
+```{r}
+colour_vec <- c("blue","red","green","green","blue","green","yellow","grey")
+colour_vec
+class(colour_vec)
+colour_fac <- factor(colour_vec)
+colour_fac
+class(colour_fac)
+```
+
+Ranking for Ordinal data
+
+```{r}
+speed_vec <- c("fast", "slow", "slow", "fast", "medium")
+speed_fac <- factor(speed_vec, ordered = TRUE, levels = c("slow", "medium", "fast"))
+speed_fac
+```
+
+#### Matrices
+
+```{r}
+temp_wk_1 <- c(10,11,12,15,13)
+temp_wk_2 <- c(10,9,13,15,16)
+temp_wk_1
+temp_wk_2
+```
+
+name/label the vectors
+
+```{r}
+weekdays_vec <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+names(temp_wk_1) <- weekdays_vec
+names(temp_wk_2) <- weekdays_vec
+temp_wk_1
+temp_wk_2
+```
+
+combining/joining both vectors into 1 vector
+
+```{r}
+temp_wk_combined <- c(temp_wk_1,temp_wk_2)
+temp_wk_combined
+```
+
+create a matrix from vector
+
+```{r}
+temp_wk_mat <- matrix(temp_wk_combined, byrow = TRUE, nrow = 2)
+temp_wk_mat
+```
+
+naming/labeling the row/column of matrix
+
+```{r}
+weeks_vec <- c("Week 1","Week 2")
+rownames(temp_wk_mat) <- weeks_vec
+colnames(temp_wk_mat) <- weekdays_vec
+temp_wk_mat
+```
+
+# Data Frame
+
+Get the data, for each columns, as vectors
+```{r}
+student_vec <- c("Jane", "John", "Tim", "Michael", "Emma")
+marks_vec <- c(80, 95, 98.5, 78.4, 50.25)
+rank_vec <- as.integer(c(3, 2, 1, 4, 5))
+passed_vec <- c(TRUE, TRUE, TRUE, TRUE, FALSE)
+```
+
+putting the data together to create a data frame
+
+```{r}
+class_df <- data.frame(student_vec,marks_vec,passed_vec,rank_vec)
+class_df
+str(class_df)
+```
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+
+
+
+```{r}
+
+```
+

@@ -1,0 +1,29 @@
+---
+title: "Lesson3"
+author: "Laven"
+date: "2025-10-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Importing libraries
+install.packages("RSQLite")
+install.packages("DBI")
+make use of *RSQLLite* and *DBI* libraries
+
+Remove database if it exists.
+Later on, we will create another brand new one
+
+```{r}
+if (file.exists("University.db"))
+    file.remove("University.db")
+```
+
+### Create connection to database
+
+```{r}
+conn <- dbConnect(RSQLite::SQLite(), "University.db")
+```

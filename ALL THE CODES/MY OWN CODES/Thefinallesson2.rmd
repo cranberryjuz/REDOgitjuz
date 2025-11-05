@@ -1,0 +1,115 @@
+---
+title: "02 Redemption"
+author: "Laven"
+date: "2025-10-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Set the working directory
+```{r}
+nile <-scan ("nile.txt")
+nile
+```
+- Check the data type in variable *nile*
+- Plot histogram
+```{r}
+typeof(nile)
+plot(nile)
+hist(nile)
+```
+Read data from *nile.txt* and store each data as a "character" type.
+```{r}
+nile_char <- scan ("nile.txt",what = character())
+nile_char
+```
+
+Check the data type in *nile_char*
+
+```{r}
+typeof(nile_char)
+```
+
+Read the plain text data seperated by *";"* for each data, specify the value for argument *sep*
+default delimeter "white-space"
+```{r}
+sunset_sem <- scan("sunset-salvo-amp.txt", what=character(), sep=";")
+sunset <- scan("sunset-salvo.txt", what=character())
+```
+
+## Reading text data of different format
+
+Reading data with different data types.
+Skip the 1st line.
+```{r}
+running_lst <- scan("running_dat.tsv", what=list("",1.0,1.0,1.0,1.0,1.0,1.0), sep="\t", skip=1)
+running_lst
+```
+### Export Plain Text Files in R
+
+Output *sunset* data with "&" as separator.
+
+```{r}
+cat(sunset, file="sunset-salvo-amp.txt", sep="&")
+```
+
+## Import Delimiter-Separated Values Files in R
+
+Read in structured data files, into R program as a table (*data frame*), automatically detect the data types for each field/variable.
+
+```{r}
+running_tbl <- read.table("running_dat.tsv", header=TRUE, sep="\t")
+running_tbl
+```
+
+Show the structure of the table/data frame, also to show the data types for each variables.
+
+```{r}
+str(running_tbl)
+```
+### Reading CSV files in R
+
+Read CSV files into R program as data frame.
+*read.csv* read comma separated values, with "." as decimal point
+*read.csv2* read semicolon separated values, with "," as decimal point
+df is data frame
+```{r}
+running_df <- read.csv("running_dat.csv")
+running_df
+```
+
+## Export Data Frame in R
+
+Export data frame / table to a delimiter-separated values file.
+Example, use "%" as separator, "*" as decimal.
+
+```{r}
+write.table(running_df, file="running_star.txt", sep="%", dec="*")
+```
+
+
+## Import XML in R
+
+o	install.packages(“xml2”)
+o	library(“xml2”)
+
+Read data from XML into R as a tree hierarchical structure
+
+```{r}
+stats_people <- read_xml("statisticians.xml")
+stats_people
+```
+
+### Export XML Files in R
+
+```{r}
+bayes_record <- xml_children(stats_people)[[4]]
+xml_remove(bayes_record)
+write_xml(stats_people, "statisticians_no_bayes.xml")
+
+```

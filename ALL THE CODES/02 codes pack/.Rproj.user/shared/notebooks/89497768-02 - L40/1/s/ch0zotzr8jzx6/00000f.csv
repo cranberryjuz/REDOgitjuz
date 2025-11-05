@@ -1,0 +1,5 @@
+"0","stats_people <- read_xml(""statisticians.xml"")"
+"1","[1m[33mError[39m in `path_to_connection()`:[22m
+[38;5;232m[33m![38;5;232m ]8;;file:///Users/lavenlee/Desktop/Yr 2 Programming/ALL THE CODES/statisticians.xml[34mstatisticians.xml[38;5;232m]8;; does not exist in current working directory (]8;;file:///Users/lavenlee/Desktop/Yr 2 Programming/ALL THE CODES[34m/Users/lavenlee/Desktop/Yr 2 Programming/ALL THE CODES[38;5;232m]8;;).[39m
+[90mRun `]8;;x-r-run:rlang::last_trace()rlang::last_trace()]8;;` to see where the error occurred.[39m
+"
