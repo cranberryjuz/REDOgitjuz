@@ -1,9 +1,9 @@
 # REDOgitjuz
 
-echo "# your-repo-name" >> README.md
+echo "REDOgitjuz" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
 git branch -M main
-git remote add origin https://github.com/your-username/your-repo-name.git
+git remote add origin https://github.com/cranberryjuz/REDOgitjuz.git
 git push -u origin main
